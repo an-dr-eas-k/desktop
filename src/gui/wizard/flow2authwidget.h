@@ -25,6 +25,7 @@ public:
     ~Flow2AuthWidget() override;
 
     void startAuth(Account *account);
+    void startProviderSignup(const QUrl &signupUrl);
     void resetAuth(Account *account = nullptr);
     void setError(const QString &error);
 
@@ -41,6 +42,7 @@ Q_SIGNALS:
 private:
     Account *_account = nullptr;
     std::unique_ptr<Flow2Auth> _asyncAuth;
+    QUrl _externalUrl;
     Ui_Flow2AuthWidget _ui{};
 
 protected Q_SLOTS:

@@ -24,8 +24,8 @@ Q_LOGGING_CATEGORY(lcUriSchemeHandler, "nextcloud.gui.urischemehandler", QtInfoM
 namespace {
 
 constexpr auto openAction = "open";
-constexpr auto addAccountAction = "addaccount";
-constexpr auto serverUrlQueryItem = "serverUrl";
+constexpr auto loginAction = "login";
+constexpr auto loginServerPathPrefix = "/server:";
 
 [[nodiscard]] QString describeUriForLog(const QUrl &url)
 {
@@ -90,42 +90,36 @@ UriSchemeHandler::ParsedUri UriSchemeHandler::parseUri(const QUrl &url)
         return result;
     }
 
-    if (action != QLatin1String(addAccountAction)) {
+    if (action != QLatin1String(loginAction)) {
         result.error = QStringLiteral("The supplied URL action is not supported.");
         qCWarning(lcUriSchemeHandler) << "Rejected URI scheme request:" << result.error << describeUriForLog(url);
         return result;
     }
 
-    if (url.path() != QStringLiteral("/")) {
-        result.error = QStringLiteral("The add account URL must use the nc://addAccount/ path.");
+    const auto path = url.path(QUrl::FullyDecoded);
+    if (!path.startsWith(QLatin1String(loginServerPathPrefix))) {
+        result.error = QStringLiteral("The login URL must use the nc://login/server:{server} path.");
         qCWarning(lcUriSchemeHandler) << "Rejected URI scheme request:" << result.error << describeUriForLog(url);
         return result;
     }
 
-    const auto query = QUrlQuery{url};
-    if (!query.hasQueryItem(QLatin1String(serverUrlQueryItem))) {
-        result.error = QStringLiteral("The add account URL is missing the serverUrl query item.");
-        qCWarning(lcUriSchemeHandler) << "Rejected URI scheme request:" << result.error << describeUriForLog(url);
-        return result;
-    }
-
-    const auto serverUrlValue = query.queryItemValue(QLatin1String(serverUrlQueryItem), QUrl::FullyDecoded);
+    const auto serverUrlValue = path.mid(QString::fromLatin1(loginServerPathPrefix).size());
     const auto serverUrl = QUrl{serverUrlValue};
-    qCInfo(lcUriSchemeHandler) << "Decoded add account serverUrl query item:"
+    qCInfo(lcUriSchemeHandler) << "Decoded login server URL:"
                                << "isValid=" << serverUrl.isValid()
                                << "isRelative=" << serverUrl.isRelative()
                                << "scheme=" << serverUrl.scheme()
                                << "host=" << serverUrl.host()
                                << "path=" << serverUrl.path();
     if (!isValidServerUrl(serverUrl)) {
-        result.error = QStringLiteral("The add account URL contains an invalid serverUrl query item.");
+        result.error = QStringLiteral("The login URL contains an invalid server URL.");
         qCWarning(lcUriSchemeHandler) << "Rejected URI scheme request:" << result.error << describeUriForLog(url);
         return result;
     }
 
-    result.action = Action::AddAccount;
+    result.action = Action::Login;
     result.serverUrl = serverUrl;
-    qCInfo(lcUriSchemeHandler) << "Accepted URI scheme request to add account for server:"
+    qCInfo(lcUriSchemeHandler) << "Accepted URI scheme request to log in to server:"
                                << serverUrl.toString(QUrl::RemoveUserInfo | QUrl::RemoveQuery | QUrl::RemoveFragment);
     return result;
 }
@@ -140,10 +134,10 @@ bool UriSchemeHandler::handleUri(const QUrl &url)
         qCInfo(lcUriSchemeHandler) << "Dispatching URI scheme request to local edit manager.";
         EditLocallyManager::instance()->handleRequest(parsedUri.originalUrl);
         return true;
-    case Action::AddAccount:
+    case Action::Login:
 #if defined ENFORCE_SINGLE_ACCOUNT
         if (!AccountManager::instance()->accounts().isEmpty()) {
-            qCWarning(lcUriSchemeHandler) << "Rejected add account URI scheme request because this client enforces a single account.";
+            qCWarning(lcUriSchemeHandler) << "Rejected login URI scheme request because this client enforces a single account.";
             showWarning(QApplication::translate("UriSchemeHandler", "Adding another account is not allowed in this client."));
             return false;
         }

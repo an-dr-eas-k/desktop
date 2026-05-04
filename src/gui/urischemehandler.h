@@ -16,7 +16,7 @@ public:
     enum class Action {
         Invalid,
         OpenLocalEdit,
-        AddAccount,
+        Login,
     };
 
     struct ParsedUri {

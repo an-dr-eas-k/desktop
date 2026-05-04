@@ -25,50 +25,56 @@ private slots:
         QTest::addColumn<QUrl>("expectedServerUrl");
         QTest::addColumn<bool>("expectError");
 
-        QTest::newRow("add account")
+        QTest::newRow("login")
+            << QUrl(QStringLiteral("nc://login/server:https://cloud.example.com"))
+            << UriSchemeHandler::Action::Login
+            << QUrl(QStringLiteral("https://cloud.example.com"))
+            << false;
+
+        QTest::newRow("login encoded server")
+            << QUrl(QStringLiteral("nc://login/server:https%3A%2F%2Fcloud.example.com"))
+            << UriSchemeHandler::Action::Login
+            << QUrl(QStringLiteral("https://cloud.example.com"))
+            << false;
+
+        QTest::newRow("login uppercase host")
+            << QUrl(QStringLiteral("nc://LOGIN/server:https://cloud.example.com"))
+            << UriSchemeHandler::Action::Login
+            << QUrl(QStringLiteral("https://cloud.example.com"))
+            << false;
+
+        QTest::newRow("login missing server prefix")
+            << QUrl(QStringLiteral("nc://login/https://cloud.example.com"))
+            << UriSchemeHandler::Action::Invalid
+            << QUrl{}
+            << true;
+
+        QTest::newRow("login missing server url")
+            << QUrl(QStringLiteral("nc://login/server:"))
+            << UriSchemeHandler::Action::Invalid
+            << QUrl{}
+            << true;
+
+        QTest::newRow("login relative server url")
+            << QUrl(QStringLiteral("nc://login/server:cloud.example.com"))
+            << UriSchemeHandler::Action::Invalid
+            << QUrl{}
+            << true;
+
+        QTest::newRow("login hostless server url")
+            << QUrl(QStringLiteral("nc://login/server:https://"))
+            << UriSchemeHandler::Action::Invalid
+            << QUrl{}
+            << true;
+
+        QTest::newRow("login unsupported server url scheme")
+            << QUrl(QStringLiteral("nc://login/server:ftp://cloud.example.com"))
+            << UriSchemeHandler::Action::Invalid
+            << QUrl{}
+            << true;
+
+        QTest::newRow("old add account")
             << QUrl(QStringLiteral("nc://addAccount/?serverUrl=https%3A%2F%2Fcloud.example.com"))
-            << UriSchemeHandler::Action::AddAccount
-            << QUrl(QStringLiteral("https://cloud.example.com"))
-            << false;
-
-        QTest::newRow("add account without slash")
-            << QUrl(QStringLiteral("nc://addAccount?serverUrl=https%3A%2F%2Fcloud.example.com"))
-            << UriSchemeHandler::Action::Invalid
-            << QUrl{}
-            << true;
-
-        QTest::newRow("add account lowercase host")
-            << QUrl(QStringLiteral("nc://addaccount/?serverUrl=https%3A%2F%2Fcloud.example.com"))
-            << UriSchemeHandler::Action::AddAccount
-            << QUrl(QStringLiteral("https://cloud.example.com"))
-            << false;
-
-        QTest::newRow("add account snake case query")
-            << QUrl(QStringLiteral("nc://addAccount/?server_url=https%3A%2F%2Fcloud.example.com"))
-            << UriSchemeHandler::Action::Invalid
-            << QUrl{}
-            << true;
-
-        QTest::newRow("add account missing server url")
-            << QUrl(QStringLiteral("nc://addAccount/"))
-            << UriSchemeHandler::Action::Invalid
-            << QUrl{}
-            << true;
-
-        QTest::newRow("add account relative server url")
-            << QUrl(QStringLiteral("nc://addAccount/?serverUrl=cloud.example.com"))
-            << UriSchemeHandler::Action::Invalid
-            << QUrl{}
-            << true;
-
-        QTest::newRow("add account hostless server url")
-            << QUrl(QStringLiteral("nc://addAccount/?serverUrl=https%3A%2F%2F"))
-            << UriSchemeHandler::Action::Invalid
-            << QUrl{}
-            << true;
-
-        QTest::newRow("add account unsupported server url scheme")
-            << QUrl(QStringLiteral("nc://addAccount/?serverUrl=ftp%3A%2F%2Fcloud.example.com"))
             << UriSchemeHandler::Action::Invalid
             << QUrl{}
             << true;
