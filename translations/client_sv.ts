@@ -447,6 +447,11 @@
     </message>
     <message>
         <location filename="../src/gui/tray/MainWindow.qml" line="503"/>
+        <source>Ask Assistant …</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../src/gui/tray/MainWindow.qml" line="503"/>
         <source>Ask Assistant…</source>
         <translation>Fråga assistenten...</translation>
     </message>
@@ -620,12 +625,12 @@ Ska kontot importeras?</translation>
     <message>
         <location filename="../src/gui/accountsettings.cpp" line="92"/>
         <source>End-to-end Encryption with Virtual Files</source>
-        <translation>End-to-end-kryptering med virtuella filer</translation>
+        <translation>ände-till-ände-kryptering med virtuella filer</translation>
     </message>
     <message>
         <location filename="../src/gui/accountsettings.cpp" line="93"/>
         <source>You seem to have the Virtual Files feature enabled on this folder. At the moment, it is not possible to implicitly download virtual files that are end-to-end encrypted. To get the best experience with virtual files and end-to-end encryption, make sure the encrypted folder is marked with &quot;Make always available locally&quot;.</source>
-        <translation>Det verkar som att funktionen &quot;Virtuella filer&quot; är aktiverad för denna mapp. För närvarande är det inte möjligt att ladda ner virtuella filer som är end-to-end-krypterade. För att använda virtuella filer med end-to-end-kryptering, säkerställ att &quot;Gör alltid tillgänglig lokalt&quot; är aktiverat på den krypterade mappen.</translation>
+        <translation>Det verkar som att funktionen &quot;Virtuella filer&quot; är aktiverad för denna mapp. För närvarande är det inte möjligt att ladda ner virtuella filer som är end-to-end-krypterade. För att använda virtuella filer med ände-till-ände-kryptering, säkerställ att &quot;Gör alltid tillgänglig lokalt&quot; är aktiverat på den krypterade mappen.</translation>
     </message>
     <message>
         <location filename="../src/gui/accountsettings.cpp" line="101"/>
@@ -642,7 +647,7 @@ Ska kontot importeras?</translation>
     <message>
         <location filename="../src/gui/accountsettings.cpp" line="114"/>
         <source>End-to-end Encryption</source>
-        <translation>End-to-end-kryptering</translation>
+        <translation>Ände-till-ände-kryptering</translation>
     </message>
     <message>
         <location filename="../src/gui/accountsettings.cpp" line="117"/>
@@ -654,7 +659,7 @@ Ska kontot importeras?</translation>
     <message>
         <location filename="../src/gui/accountsettings.cpp" line="280"/>
         <source>End-to-end encryption has not been initialized on this account.</source>
-        <translation>End‑to‑end‑kryptering har inte aktiverats på detta konto.</translation>
+        <translation>Ände-till-ände-kryptering har inte aktiverats på detta konto.</translation>
     </message>
     <message>
         <location filename="../src/gui/accountsettings.cpp" line="302"/>
@@ -669,7 +674,7 @@ Ska kontot importeras?</translation>
     <message>
         <location filename="../src/gui/accountsettings.cpp" line="319"/>
         <source>Encryption is set-up. Remember to &lt;b&gt;Encrypt&lt;/b&gt; a folder to end-to-end encrypt any new files added to it.</source>
-        <translation>Kryptering är konfigurerad. Kom ihåg att &lt;b&gt;Kryptera&lt;/b&gt; en mapp för att end-to-end-kryptera alla nya filer som läggs till i den.</translation>
+        <translation>Kryptering är konfigurerad. Kom ihåg att &lt;b&gt;Kryptera&lt;/b&gt; en mapp för att ände-till-ände-kryptera alla nya filer som läggs till i den.</translation>
     </message>
     <message>
         <location filename="../src/gui/accountsettings.cpp" line="352"/>
@@ -695,14 +700,14 @@ Ska kontot importeras?</translation>
         <location filename="../src/gui/accountsettings.cpp" line="413"/>
         <source>You cannot encrypt this folder because the end-to-end encryption is not set-up yet on this device.
 Would you like to do this now?</source>
-        <translation>Du kan inte end-to-end-kryptera den här mappen eftersom end-to-end-kryptering ännu inte är konfigurerad på den här enheten.
+        <translation>Du kan inte ände-till-ände-kryptera den här mappen eftersom end-to-end-kryptering ännu inte är konfigurerad på den här enheten.
 Vill du konfigurera den nu?</translation>
     </message>
     <message>
         <location filename="../src/gui/accountsettings.cpp" line="437"/>
         <source>You cannot encrypt a folder with contents, please remove the files.
 Wait for the new sync, then encrypt it.</source>
-        <translation>Du kan inte kryptera en mapp med innehåll, vänligen ta bort filerna.
+        <translation>Du kan inte kryptera en mapp med innehåll, ta bort filerna.
 Vänta på en ny synk och kryptera den sedan.</translation>
     </message>
     <message>
@@ -855,7 +860,7 @@ Den här åtgärden avbryter alla pågående synkroniseringar.</translation>
     <message>
         <location filename="../src/gui/accountsettings.cpp" line="1095"/>
         <source>End-to-end encryption mnemonic</source>
-        <translation>Krypteringsord för end-to-end-kryptering</translation>
+        <translation>Krypteringsord för ände-till-ände-kryptering</translation>
     </message>
     <message>
         <location filename="../src/gui/accountsettings.cpp" line="1097"/>
@@ -865,17 +870,17 @@ Den här åtgärden avbryter alla pågående synkroniseringar.</translation>
     <message>
         <location filename="../src/gui/accountsettings.cpp" line="1122"/>
         <source>Forget the end-to-end encryption on this device</source>
-        <translation>Glöm end-to-end-krypteringen på den här enheten</translation>
+        <translation>Glöm ände-till-ände-krypteringen på den här enheten</translation>
     </message>
     <message>
         <location filename="../src/gui/accountsettings.cpp" line="1123"/>
         <source>Do you want to forget the end-to-end encryption settings for %1 on this device?</source>
-        <translation>Vill du glömma inställningarna till end-to-end-kryptering för %1 på den här enheten?</translation>
+        <translation>Vill du glömma inställningarna till ände-till-ände-kryptering för %1 på den här enheten?</translation>
     </message>
     <message>
         <location filename="../src/gui/accountsettings.cpp" line="1124"/>
         <source>Forgetting end-to-end encryption will remove the sensitive data and all the encrypted files from this device.&lt;br&gt;However, the encrypted files will remain on the server and all your other devices, if configured.</source>
-        <translation>Att glömma end-to-end-kryptering kommer att ta bort känslig data och alla krypterade filer från den här enheten.&lt;br&gt;Filerna kommer dock att finnas kvar på servern och på alla dina andra enheter, om de är konfigurerade.</translation>
+        <translation>Att glömma ände-till-ände-kryptering kommer att ta bort känslig data och alla krypterade filer från den här enheten.&lt;br&gt;Filerna kommer dock att finnas kvar på servern och på alla dina andra enheter, om de är konfigurerade.</translation>
     </message>
     <message>
         <location filename="../src/gui/accountsettings.cpp" line="1197"/>
@@ -920,17 +925,17 @@ Den här åtgärden avbryter alla pågående synkroniseringar.</translation>
     <message>
         <location filename="../src/gui/accountsettings.cpp" line="1695"/>
         <source>End-to-end encryption has been initialized on this account with another device.&lt;br&gt;Enter the unique mnemonic to have the encrypted folders synchronize on this device as well.</source>
-        <translation>End-to-end-kryptering har initierats på det här kontot med en annan enhet.&lt;br&gt;Ange den unika minnesfrasen för att synkronisera de krypterade mapparna även på den här enheten.</translation>
+        <translation>Ände-till-ände-kryptering har initierats på det här kontot med en annan enhet.&lt;br&gt;Ange den unika minnesfrasen för att synkronisera de krypterade mapparna även på den här enheten.</translation>
     </message>
     <message>
         <location filename="../src/gui/accountsettings.cpp" line="1753"/>
         <source>This account supports end-to-end encryption, but it needs to be set up first.</source>
-        <translation>Det här kontot stöder end-to-end-kryptering, men det måste konfigureras först.</translation>
+        <translation>Det här kontot stöder ände-till-ände-kryptering, men det måste konfigureras först.</translation>
     </message>
     <message>
         <location filename="../src/gui/accountsettings.cpp" line="1858"/>
         <source>The virtual files integration does not support end-to-end encryption yet.</source>
-        <translation>Integrationen av virtuella filer stöder ännu inte end-to-end-kryptering.</translation>
+        <translation>Integrationen av virtuella filer stöder ännu inte ände-till-ände-kryptering.</translation>
     </message>
     <message>
         <location filename="../src/gui/accountsettings.cpp" line="1757"/>
@@ -1579,7 +1584,7 @@ Den här åtgärden avbryter alla pågående synkroniseringar.</translation>
     <message>
         <location filename="../src/libsync/clientsideencryption.cpp" line="2275"/>
         <source>Please enter your end-to-end encryption passphrase:&lt;br&gt;&lt;br&gt;Username: %2&lt;br&gt;Account: %3&lt;br&gt;</source>
-        <translation>Ange din lösenordsfras för end-to-end-kryptering:&lt;br&gt;&lt;br&gt;Användarnamn: %2&lt;br&gt;Konto: %3&lt;br&gt;</translation>
+        <translation>Ange din lösenordsfras för ände-till-ände-kryptering:&lt;br&gt;&lt;br&gt;Användarnamn: %2&lt;br&gt;Konto: %3&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../src/libsync/clientsideencryption.cpp" line="2283"/>
@@ -2638,12 +2643,12 @@ För avancerade användare: det här problemet kan vara relaterat till flera syn
     <message>
         <location filename="../src/gui/folderstatusmodel.cpp" line="992"/>
         <source>Checking for changes in local &quot;%1&quot;</source>
-        <translation>Söker efter ändringar i lokal &apos;%1&apos;</translation>
+        <translation>Söker efter ändringar i lokala &quot;%1&quot;</translation>
     </message>
     <message>
         <location filename="../src/gui/folderstatusmodel.cpp" line="999"/>
         <source>Syncing local and remote changes</source>
-        <translation>Synkronisera lokala och fjärranslutna ändringar</translation>
+        <translation>Synkroniserar lokala och fjärrändringar</translation>
     </message>
     <message>
         <location filename="../src/gui/folderstatusmodel.cpp" line="1049"/>
@@ -3191,7 +3196,7 @@ Det är inte möjligt att nedgradera versioner omedelbart: att byta från stabil
     <message>
         <location filename="../src/gui/socketapi/socketapi.cpp" line="810"/>
         <source>Please enter a password for your link share:</source>
-        <translation>Ange ett lösenord for din länkdelning:</translation>
+        <translation>Ange ett lösenord för din länkdelning:</translation>
     </message>
     <message>
         <location filename="../src/gui/socketapi/socketapi.cpp" line="836"/>
@@ -4168,7 +4173,7 @@ Detta är ett nytt experimentellt läge. Om du bestämmer dig för att använda 
     <message>
         <location filename="../src/gui/passwordinputdialog.ui" line="35"/>
         <source>Please enter a password for your share:</source>
-        <translation>Ange ett lösenord for din delning:</translation>
+        <translation>Ange ett lösenord för din delning:</translation>
     </message>
 </context>
 <context>
@@ -4185,6 +4190,11 @@ Detta är ett nytt experimentellt läge. Om du bestämmer dig för att använda 
         <location filename="../src/libsync/discovery.cpp" line="383"/>
         <source>Symbolic links are not supported in syncing.</source>
         <translation>Symboliska länkar kan ej synkroniseras.</translation>
+    </message>
+    <message>
+        <location filename="../src/libsync/discovery.cpp" line="396"/>
+        <source>File is locked by another application.</source>
+        <translation>Filen är låst av ett annat program.</translation>
     </message>
     <message>
         <location filename="../src/libsync/discovery.cpp" line="392"/>
@@ -4782,6 +4792,12 @@ Detta är ett nytt experimentellt läge. Om du bestämmer dig för att använda 
 <context>
     <name>OCC::PropagateUploadFileNG</name>
     <message>
+        <location filename="../src/libsync/propagateuploadng.cpp" line="364"/>
+        <source>File is locked preventing syncing it</source>
+        <comment>Generic warning message when a locked file cannot be synced</comment>
+        <translation>Filen är låst och kan inte synkroniseras</translation>
+    </message>
+    <message>
         <location filename="../src/libsync/propagateuploadng.cpp" line="451"/>
         <source>The local file was removed during sync.</source>
         <translation>Den lokala filen togs bort under synkronisering.</translation>
@@ -4821,6 +4837,12 @@ Detta är ett nytt experimentellt läge. Om du bestämmer dig för att använda 
 </context>
 <context>
     <name>OCC::PropagateUploadFileV1</name>
+    <message>
+        <location filename="../src/libsync/propagateuploadv1.cpp" line="141"/>
+        <source>File is locked preventing syncing it</source>
+        <comment>Generic warning message when a locked file cannot be synced</comment>
+        <translation>Filen är låst och kan inte synkroniseras</translation>
+    </message>
     <message>
         <location filename="../src/libsync/propagateuploadv1.cpp" line="228"/>
         <source>Poll URL missing</source>
@@ -4966,6 +4988,11 @@ Detta är ett nytt experimentellt läge. Om du bestämmer dig för att använda 
     </message>
     <message>
         <location filename="../src/gui/filedetails/sharemodel.cpp" line="573"/>
+        <source>%1 day</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../src/gui/filedetails/sharemodel.cpp" line="573"/>
         <source>1 day</source>
         <translation>1 dag</translation>
     </message>
@@ -5038,23 +5065,23 @@ Detta är ett nytt experimentellt läge. Om du bestämmer dig för att använda 
         <translation>Delningsmeny</translation>
     </message>
     <message>
-        <location filename="../src/gui/socketapi/socketapi.cpp" line="1115"/>
+        <location filename="../src/gui/socketapi/socketapi.cpp" line="1097"/>
         <source>I shared something with you</source>
         <translation>Jag delade något med dig</translation>
     </message>
     <message>
-        <location filename="../src/gui/socketapi/socketapi.cpp" line="1128"/>
-        <location filename="../src/gui/socketapi/socketapi.cpp" line="1165"/>
+        <location filename="../src/gui/socketapi/socketapi.cpp" line="1110"/>
+        <location filename="../src/gui/socketapi/socketapi.cpp" line="1147"/>
         <source>Share options</source>
         <translation>Delningsalternativ</translation>
     </message>
     <message>
-        <location filename="../src/gui/socketapi/socketapi.cpp" line="1132"/>
+        <location filename="../src/gui/socketapi/socketapi.cpp" line="1114"/>
         <source>Send private link by email …</source>
         <translation>Skicka privat länk med e-post ...</translation>
     </message>
     <message>
-        <location filename="../src/gui/socketapi/socketapi.cpp" line="1131"/>
+        <location filename="../src/gui/socketapi/socketapi.cpp" line="1113"/>
         <source>Copy private link to clipboard</source>
         <translation>Kopiera privat länk till urklipp</translation>
     </message>
@@ -5066,7 +5093,7 @@ Detta är ett nytt experimentellt läge. Om du bestämmer dig för att använda 
     <message>
         <location filename="../src/gui/socketapi/socketapi.cpp" line="544"/>
         <source>The account %1 does not have end-to-end encryption configured. Please configure this in your account settings to enable folder encryption.</source>
-        <translation>Kontot %1 har inte end-to-end-kryptering konfigurerad. Konfigurera detta i dina kontoinställningar för att aktivera mappkryptering.</translation>
+        <translation>Kontot %1 har inte ände-till-ände-kryptering konfigurerad. Konfigurera detta i dina kontoinställningar för att aktivera mappkryptering.</translation>
     </message>
     <message>
         <location filename="../src/gui/socketapi/socketapi.cpp" line="563"/>
@@ -5093,101 +5120,101 @@ Servern svarade med fel: %2</translation>
         <translation>Följande mapp krypterades: &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../src/gui/socketapi/socketapi.cpp" line="1059"/>
+        <location filename="../src/gui/socketapi/socketapi.cpp" line="1041"/>
         <source>Select new location …</source>
         <translation>Välj ny plats …</translation>
     </message>
     <message>
-        <location filename="../src/gui/socketapi/socketapi.cpp" line="1136"/>
-        <location filename="../src/gui/socketapi/socketapi.cpp" line="1199"/>
+        <location filename="../src/gui/socketapi/socketapi.cpp" line="1118"/>
+        <location filename="../src/gui/socketapi/socketapi.cpp" line="1181"/>
         <source>File actions</source>
         <translation>Filåtgärder</translation>
     </message>
     <message>
-        <location filename="../src/gui/socketapi/socketapi.cpp" line="1129"/>
-        <location filename="../src/gui/socketapi/socketapi.cpp" line="1346"/>
+        <location filename="../src/gui/socketapi/socketapi.cpp" line="1111"/>
+        <location filename="../src/gui/socketapi/socketapi.cpp" line="1328"/>
         <source>Activity</source>
         <translation>Aktivitet</translation>
     </message>
     <message>
-        <location filename="../src/gui/socketapi/socketapi.cpp" line="1157"/>
+        <location filename="../src/gui/socketapi/socketapi.cpp" line="1139"/>
         <source>Leave this share</source>
         <translation>Lämna denna delning</translation>
     </message>
     <message>
-        <location filename="../src/gui/socketapi/socketapi.cpp" line="1163"/>
+        <location filename="../src/gui/socketapi/socketapi.cpp" line="1145"/>
         <source>Resharing this file is not allowed</source>
         <translation>Vidaredelning av denna fil är inte tillåtet</translation>
     </message>
     <message>
-        <location filename="../src/gui/socketapi/socketapi.cpp" line="1163"/>
+        <location filename="../src/gui/socketapi/socketapi.cpp" line="1145"/>
         <source>Resharing this folder is not allowed</source>
         <translation>Vidaredelning av denna mapp är inte tillåtet</translation>
     </message>
     <message>
-        <location filename="../src/gui/socketapi/socketapi.cpp" line="1207"/>
+        <location filename="../src/gui/socketapi/socketapi.cpp" line="1189"/>
         <source>Encrypt</source>
         <translation>Kryptera</translation>
     </message>
     <message>
-        <location filename="../src/gui/socketapi/socketapi.cpp" line="1218"/>
+        <location filename="../src/gui/socketapi/socketapi.cpp" line="1200"/>
         <source>Lock file</source>
         <translation>Lås fil</translation>
     </message>
     <message>
-        <location filename="../src/gui/socketapi/socketapi.cpp" line="1221"/>
+        <location filename="../src/gui/socketapi/socketapi.cpp" line="1203"/>
         <source>Unlock file</source>
         <translation>Lås upp fil</translation>
     </message>
     <message>
-        <location filename="../src/gui/socketapi/socketapi.cpp" line="1237"/>
+        <location filename="../src/gui/socketapi/socketapi.cpp" line="1219"/>
         <source>Locked by %1</source>
         <translation>Låst av %1</translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/gui/socketapi/socketapi.cpp" line="1241"/>
+        <location filename="../src/gui/socketapi/socketapi.cpp" line="1223"/>
         <source>Expires in %1 minutes</source>
         <comment>remaining time before lock expires</comment>
         <translation><numerusform>Går ut om %1 minut</numerusform><numerusform>Går ut om %1 minuter</numerusform></translation>
     </message>
     <message>
-        <location filename="../src/gui/socketapi/socketapi.cpp" line="1381"/>
+        <location filename="../src/gui/socketapi/socketapi.cpp" line="1363"/>
         <source>Resolve conflict …</source>
         <translation>Lös konflikt …</translation>
     </message>
     <message>
-        <location filename="../src/gui/socketapi/socketapi.cpp" line="1385"/>
+        <location filename="../src/gui/socketapi/socketapi.cpp" line="1367"/>
         <source>Move and rename …</source>
         <translation>Flytta och byt namn …</translation>
     </message>
     <message>
-        <location filename="../src/gui/socketapi/socketapi.cpp" line="1388"/>
+        <location filename="../src/gui/socketapi/socketapi.cpp" line="1370"/>
         <source>Move, rename and upload …</source>
         <translation>Flytta, byt namn och ladda upp …</translation>
     </message>
     <message>
-        <location filename="../src/gui/socketapi/socketapi.cpp" line="1390"/>
+        <location filename="../src/gui/socketapi/socketapi.cpp" line="1372"/>
         <source>Delete local changes</source>
         <translation>Radera lokala ändringar</translation>
     </message>
     <message>
-        <location filename="../src/gui/socketapi/socketapi.cpp" line="1396"/>
+        <location filename="../src/gui/socketapi/socketapi.cpp" line="1378"/>
         <source>Move and upload …</source>
         <translation>Flytta och ladda upp …</translation>
     </message>
     <message>
-        <location filename="../src/gui/socketapi/socketapi.cpp" line="1397"/>
+        <location filename="../src/gui/socketapi/socketapi.cpp" line="1379"/>
         <source>Delete</source>
         <translation>Ta bort</translation>
     </message>
     <message>
-        <location filename="../src/gui/socketapi/socketapi.cpp" line="1169"/>
+        <location filename="../src/gui/socketapi/socketapi.cpp" line="1151"/>
         <source>Copy internal link</source>
         <translation>Kopiera intern länk</translation>
     </message>
     <message>
-        <location filename="../src/gui/socketapi/socketapi.cpp" line="1352"/>
-        <location filename="../src/gui/socketapi/socketapi.cpp" line="1354"/>
+        <location filename="../src/gui/socketapi/socketapi.cpp" line="1334"/>
+        <location filename="../src/gui/socketapi/socketapi.cpp" line="1336"/>
         <source>Open in browser</source>
         <translation>Öppna i webbläsare</translation>
     </message>
@@ -5824,6 +5851,11 @@ Servern svarade med fel: %2</translation>
         <location filename="../src/gui/tray/usermodel.cpp" line="1507"/>
         <source>Sending your request…</source>
         <translation>Skickar din begäran...</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/tray/usermodel.cpp" line="1529"/>
+        <source>Sending your request …</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/gui/tray/usermodel.cpp" line="1580"/>
@@ -7280,7 +7312,7 @@ Servern svarade med fel: %2</translation>
     <message>
         <location filename="../src/libsync/progressdispatcher.cpp" line="54"/>
         <source>Updated end-to-end encryption metadata</source>
-        <translation>Uppdaterade metadata för end-to-end-kryptering</translation>
+        <translation>Uppdaterade metadata för ände-till-ände-kryptering</translation>
     </message>
     <message>
         <location filename="../src/libsync/progressdispatcher.cpp" line="57"/>
@@ -7326,7 +7358,7 @@ Servern svarade med fel: %2</translation>
     <message>
         <location filename="../src/libsync/progressdispatcher.cpp" line="89"/>
         <source>Updating end-to-end encryption metadata</source>
-        <translation>Uppdaterar metadata för end-to-end-kryptering</translation>
+        <translation>Uppdaterar metadata för ände-till-ände-kryptering</translation>
     </message>
 </context>
 <context>
