@@ -5,7 +5,7 @@
 
 #include "flow2authwidget.h"
 
-#include "common/utility.h"
+#include "guiutility.h"
 #include "account.h"
 #include "creds/webflowcredentials.h"
 #include "networkjobs.h"
