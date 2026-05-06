@@ -83,7 +83,7 @@ body:
     id: distro
     attributes:
       label: Which version of the operating system you are running.
-      description: In case of macOS, you can [quickly find out which version you are using as documented by Apple](https://support.apple.com/en-us/109033). In case of Linux, provide the distribution + version.
+      description: In case of macOS, you can [quickly find out which version you are using as documented by Apple](https://support.apple.com/en-us/109033). In case of Linux, provide the distribution name and its version.
       placeholder: Windows 11
     validations:
       required: true
@@ -95,7 +95,7 @@ body:
       options:
         - "Official Linux AppImage"
         - "Official Windows MSI"
-        - "Official macOS Installer for macOS 13 and later"
+        - "Official Installer for macOS 13 and later"
         - "Community PPA (please test with the AppImage package ?)"
         - "Community FlatPak (please test with the AppImage package ?)"
         - "Community SNAP package (please test with the AppImage package ?)"
@@ -126,8 +126,8 @@ body:
       label: Did this occur after an update or on a clean installation?
       description: Select if bug is present after an app update or on a clean installation without the client being installed before.
       options:
-        - "Minor version update (in example: 33.0.0 → 33.0.1)"
-        - "Major version update (in example: 4.0.0 → 33.0.0)"
+        - "Minor version update (i.e. 33.0.0 → 33.0.1)"
+        - "Major version update (i.e. 4.0.0 → 33.0.0)"
         - "Clean desktop client installation"
     validations:
       required: true
