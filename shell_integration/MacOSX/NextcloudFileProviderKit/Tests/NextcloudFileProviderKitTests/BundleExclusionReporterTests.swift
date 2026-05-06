@@ -23,14 +23,14 @@ private final class CapturingAppProxy: NSObject, AppProtocol {
 
     func presentFileActions(
         _ fileId: String,
-        path: String,
-        remoteItemPath: String,
-        withDomainIdentifier domainIdentifier: String
+        path _: String,
+        remoteItemPath _: String,
+        withDomainIdentifier _: String
     ) {
         presentedFileActions.append(fileId)
     }
 
-    func reportSyncStatus(_ status: String, forDomainIdentifier domainIdentifier: String) {
+    func reportSyncStatus(_ status: String, forDomainIdentifier _: String) {
         reportedSyncStatuses.append(status)
     }
 

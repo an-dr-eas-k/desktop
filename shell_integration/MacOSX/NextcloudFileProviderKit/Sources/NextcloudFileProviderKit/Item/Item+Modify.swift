@@ -229,8 +229,6 @@ public extension Item {
         return (modifiedItem, nil)
     }
 
-
-
     func modify(
         itemTarget: NSFileProviderItem,
         baseVersion: NSFileProviderItemVersion = NSFileProviderItemVersion(),

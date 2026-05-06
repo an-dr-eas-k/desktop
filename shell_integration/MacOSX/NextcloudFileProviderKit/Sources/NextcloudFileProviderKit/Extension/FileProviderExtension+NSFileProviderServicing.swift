@@ -11,7 +11,7 @@ let AuthenticationTimeouts: [UInt64] = [ // Have progressively longer timeouts t
 ]
 
 extension FileProviderExtension: NSFileProviderServicing {
-    public func supportedServiceSources(for itemIdentifier: NSFileProviderItemIdentifier, completionHandler: @escaping ([NSFileProviderServiceSource]?, Error?) -> Void) -> Progress {
+    public func supportedServiceSources(for _: NSFileProviderItemIdentifier, completionHandler: @escaping ([NSFileProviderServiceSource]?, Error?) -> Void) -> Progress {
         logger.debug("Serving supported service sources...")
         let serviceSource = FPUIExtensionServiceSource(fpExtension: self)
         completionHandler([self, serviceSource], nil)

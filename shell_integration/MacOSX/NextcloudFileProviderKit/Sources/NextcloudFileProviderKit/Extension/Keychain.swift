@@ -11,7 +11,7 @@ struct Keychain {
     let logger: FileProviderLogger
 
     init(log: any FileProviderLogging) {
-        self.logger = FileProviderLogger(category: "Keychain", log: log)
+        logger = FileProviderLogger(category: "Keychain", log: log)
     }
 
     ///
@@ -44,7 +44,7 @@ struct Keychain {
             return nil
         }
 
-        guard let existingItem = item as? [String : Any], let passwordData = existingItem[kSecValueData as String] as? Data, let password = String(data: passwordData, encoding: String.Encoding.utf8) else {
+        guard let existingItem = item as? [String: Any], let passwordData = existingItem[kSecValueData as String] as? Data, let password = String(data: passwordData, encoding: String.Encoding.utf8) else {
             logger.error("Unexpected password data!")
             return nil
         }

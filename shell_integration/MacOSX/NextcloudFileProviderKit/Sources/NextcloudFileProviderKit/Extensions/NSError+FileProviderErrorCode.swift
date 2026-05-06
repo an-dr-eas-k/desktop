@@ -14,11 +14,11 @@ enum FileProviderErrorCode: Int {
     var localizedDescription: String {
         switch self {
             case .connection:
-                return String(localized: "There was a network connection error.")
+                String(localized: "There was a network connection error.")
             case .invalidCredentials:
-                return String(localized: "Authentication failed due to invalid credentials.")
+                String(localized: "Authentication failed due to invalid credentials.")
             case .missingAccountInformation:
-                return String(localized: "The account information is not available.")
+                String(localized: "The account information is not available.")
         }
     }
 }

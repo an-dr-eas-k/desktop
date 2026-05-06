@@ -11,56 +11,56 @@ extension FileProviderExtension: NSFileProviderCustomAction {
         completionHandler: @Sendable @escaping ((any Error)?) -> Void
     ) -> Progress {
         switch actionIdentifier.rawValue {
-        case "com.nextcloud.desktopclient.FileProviderExt.FileActionsAction":
-            guard let itemIdentifier = itemIdentifiers.first else {
-                logger.error("Failed to get first item identifier for file actions action.")
-                completionHandler(NSFileProviderError(.noSuchItem))
-                return Progress()
-            }
-
-            guard let dbManager else {
-                logger.error("Cannot fetch metadata for item file actions due to database manager not being available.", [.item: itemIdentifier])
-                completionHandler(NSFileProviderError(.cannotSynchronize))
-                return Progress()
-            }
-
-            Task {
-                guard let userVisibleURL = try await manager?.getUserVisibleURL(for: itemIdentifier) else {
-                    logger.error("Failed to get user-visible URL for item.", [.item: itemIdentifier])
+            case "com.nextcloud.desktopclient.FileProviderExt.FileActionsAction":
+                guard let itemIdentifier = itemIdentifiers.first else {
+                    logger.error("Failed to get first item identifier for file actions action.")
                     completionHandler(NSFileProviderError(.noSuchItem))
-                    return
+                    return Progress()
                 }
 
-                guard let metadata = dbManager.itemMetadata(itemIdentifier) else {
-                    logger.error("Failed to get metadata for item.", [.item: itemIdentifier])
+                guard let dbManager else {
+                    logger.error("Cannot fetch metadata for item file actions due to database manager not being available.", [.item: itemIdentifier])
                     completionHandler(NSFileProviderError(.cannotSynchronize))
-                    return
+                    return Progress()
                 }
 
-                let path = userVisibleURL.path
-                let domainIdentifier = domain.identifier.rawValue
-                logger.info("Telling main app to present file actions.", [.item: path, .domain: domainIdentifier])
-                app?.presentFileActions(metadata.ocId, path: path, remoteItemPath: metadata.path, withDomainIdentifier: domainIdentifier)
-                completionHandler(nil)
-            }
+                Task {
+                    guard let userVisibleURL = try await manager?.getUserVisibleURL(for: itemIdentifier) else {
+                        logger.error("Failed to get user-visible URL for item.", [.item: itemIdentifier])
+                        completionHandler(NSFileProviderError(.noSuchItem))
+                        return
+                    }
 
-            return Progress()
-        case "com.nextcloud.desktopclient.FileProviderExt.KeepDownloadedAction":
-            return performKeepDownloadedAction(
-                keepDownloaded: true,
-                onItemsWithIdentifiers: itemIdentifiers,
-                completionHandler: completionHandler
-            )
-        case "com.nextcloud.desktopclient.FileProviderExt.AutoEvictAction":
-            return performKeepDownloadedAction(
-                keepDownloaded: false,
-                onItemsWithIdentifiers: itemIdentifiers,
-                completionHandler: completionHandler
-            )
-        default:
-            logger.error("Unsupported action: \(actionIdentifier.rawValue)")
-            completionHandler(NSError(domain: NSCocoaErrorDomain, code: NSFeatureUnsupportedError))
-            return Progress()
+                    guard let metadata = dbManager.itemMetadata(itemIdentifier) else {
+                        logger.error("Failed to get metadata for item.", [.item: itemIdentifier])
+                        completionHandler(NSFileProviderError(.cannotSynchronize))
+                        return
+                    }
+
+                    let path = userVisibleURL.path
+                    let domainIdentifier = domain.identifier.rawValue
+                    logger.info("Telling main app to present file actions.", [.item: path, .domain: domainIdentifier])
+                    app?.presentFileActions(metadata.ocId, path: path, remoteItemPath: metadata.path, withDomainIdentifier: domainIdentifier)
+                    completionHandler(nil)
+                }
+
+                return Progress()
+            case "com.nextcloud.desktopclient.FileProviderExt.KeepDownloadedAction":
+                return performKeepDownloadedAction(
+                    keepDownloaded: true,
+                    onItemsWithIdentifiers: itemIdentifiers,
+                    completionHandler: completionHandler
+                )
+            case "com.nextcloud.desktopclient.FileProviderExt.AutoEvictAction":
+                return performKeepDownloadedAction(
+                    keepDownloaded: false,
+                    onItemsWithIdentifiers: itemIdentifiers,
+                    completionHandler: completionHandler
+                )
+            default:
+                logger.error("Unsupported action: \(actionIdentifier.rawValue)")
+                completionHandler(NSError(domain: NSCocoaErrorDomain, code: NSFeatureUnsupportedError))
+                return Progress()
         }
     }
 
@@ -122,7 +122,7 @@ extension FileProviderExtension: NSFileProviderCustomAction {
                 }
                 logger.info("All items successfully processed for keepDownloaded=\(keepDownloaded)")
                 completionHandler(nil)
-            } catch let error {
+            } catch {
                 logger.error("Error during keepDownloaded=\(keepDownloaded) action: \(error.localizedDescription)")
                 completionHandler(error)
             }

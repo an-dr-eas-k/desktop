@@ -243,7 +243,7 @@ final class ItemModifyTests: NextcloudFileProviderKitTestCase {
     /// with `.excludedFromSync` and that the (mock) server is left untouched. Replaces the
     /// previous `testModifyBundleContents` test, which validated the now-removed recursive-
     /// mirror code path. See https://github.com/nextcloud/desktop/issues/9827.
-    func testModifyBundleIsExcluded() async throws {
+    func testModifyBundleIsExcluded() async {
         let db = Self.dbManager.ncDatabase()
         debugPrint(db)
 

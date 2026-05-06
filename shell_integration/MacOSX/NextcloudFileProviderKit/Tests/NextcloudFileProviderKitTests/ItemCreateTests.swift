@@ -229,7 +229,7 @@ final class ItemCreateTests: NextcloudFileProviderKitTestCase {
     /// and that nothing is uploaded to the (mock) server. Replaces the previous
     /// `testCreateBundle` test, which validated the now-removed recursive-mirror code path.
     /// See https://github.com/nextcloud/desktop/issues/9827.
-    func testCreateBundleIsExcluded() async throws {
+    func testCreateBundleIsExcluded() async {
         let db = Self.dbManager.ncDatabase() // Strong ref for in memory test db
         debugPrint(db)
 
@@ -272,7 +272,7 @@ final class ItemCreateTests: NextcloudFileProviderKitTestCase {
 
     /// Same expectation for `.app` (`com.apple.application-bundle`) — historically the most
     /// problematic bundle type for our recursive-mirror approach because of internal symlinks.
-    func testCreateDotAppIsExcluded() async throws {
+    func testCreateDotAppIsExcluded() async {
         let db = Self.dbManager.ncDatabase()
         debugPrint(db)
 

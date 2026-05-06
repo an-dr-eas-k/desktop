@@ -245,7 +245,6 @@ public extension Item {
         return (fpItem, nil)
     }
 
-
     static func create(
         basedOn itemTemplate: NSFileProviderItem,
         fields _: NSFileProviderItemFields = NSFileProviderItemFields(),

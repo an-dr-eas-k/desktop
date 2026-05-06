@@ -37,7 +37,7 @@ extension FileProviderExtension: NSFileProviderThumbnailing {
             for: itemIdentifiers,
             requestedSize: size,
             account: ncAccount,
-            usingRemoteInterface: self.ncKit,
+            usingRemoteInterface: ncKit,
             andDatabase: dbManager,
             perThumbnailCompletionHandler: { id, data, error in perItemBox.value(id, data, error) },
             log: log,

@@ -65,43 +65,43 @@ import OSLog
     private var pendingAccount: Account?
     private var setupChain: Task<Void, Never> = Task {}
 
-    // Whether or not we are going to recursively scan new folders when they are discovered.
-    // Apple's recommendation is that we should always scan the file hierarchy fully.
-    // This does lead to long load times when a file provider domain is initially configured.
-    // We can instead do a fast enumeration where we only scan folders as the user navigates through
-    // them, thereby avoiding this issue; the trade-off is that we will be unable to detect
-    // materialized file moves to unexplored folders, therefore deleting the item when we could have
-    // just moved it instead.
-    //
-    // Since it's not desirable to cancel a long recursive enumeration half-way through, we do the
-    // fast enumeration by default. We prompt the user on the client side to run a proper, full
-    // enumeration if they want for safety.
+    /// Whether or not we are going to recursively scan new folders when they are discovered.
+    /// Apple's recommendation is that we should always scan the file hierarchy fully.
+    /// This does lead to long load times when a file provider domain is initially configured.
+    /// We can instead do a fast enumeration where we only scan folders as the user navigates through
+    /// them, thereby avoiding this issue; the trade-off is that we will be unable to detect
+    /// materialized file moves to unexplored folders, therefore deleting the item when we could have
+    /// just moved it instead.
+    ///
+    /// Since it's not desirable to cancel a long recursive enumeration half-way through, we do the
+    /// fast enumeration by default. We prompt the user on the client side to run a proper, full
+    /// enumeration if they want for safety.
     lazy var config = FileProviderDomainDefaults(identifier: domain.identifier, log: log)
 
     public required init(domain: NSFileProviderDomain) {
-        // The containing application must create a domain using 
+        // The containing application must create a domain using
         // `NSFileProviderManager.add(_:, completionHandler:)`. The system will then launch the
         // application extension process, call `FileProviderExtension.init(domain:)` to instantiate
         // the extension for that domain, and call methods on the instance.
         self.domain = domain
-        self.manager = NSFileProviderManager(for: domain)
+        manager = NSFileProviderManager(for: domain)
 
         // Set up logging.
-        self.log = FileProviderLog(fileProviderDomainIdentifier: domain.identifier)
-        self.logger = FileProviderLogger(category: "FileProviderExtension", log: log)
+        log = FileProviderLog(fileProviderDomainIdentifier: domain.identifier)
+        logger = FileProviderLogger(category: "FileProviderExtension", log: log)
         logger.debug("Initializing with domain identifier.", [.domain: domain.identifier.rawValue])
 
         // Set up NextcloudKit.
-        self.ncKit = NextcloudKit.shared
+        ncKit = NextcloudKit.shared
 
         #if DEBUG
-        NKLogFileManager.configure(logLevel: .verbose)
+            NKLogFileManager.configure(logLevel: .verbose)
         #else
-        NKLogFileManager.configure(logLevel: .normal)
+            NKLogFileManager.configure(logLevel: .normal)
         #endif
 
         logger.info("NextcloudKit logging configured.", [.url: NKLogFileManager.shared.currentLogFileURL()])
-        self.keychain = Keychain(log: log)
+        keychain = Keychain(log: log)
         super.init()
     }
 
@@ -143,7 +143,7 @@ import OSLog
 
     // MARK: - NSFileProviderReplicatedExtension protocol methods
 
-    public func item(for identifier: NSFileProviderItemIdentifier, request: NSFileProviderRequest, completionHandler: @Sendable @escaping (NSFileProviderItem?, Error?) -> Void) -> Progress {
+    public func item(for identifier: NSFileProviderItemIdentifier, request _: NSFileProviderRequest, completionHandler: @Sendable @escaping (NSFileProviderItem?, Error?) -> Void) -> Progress {
         logger.debug("Received request for item.", [.item: identifier])
 
         guard let ncAccount else {
@@ -151,7 +151,7 @@ import OSLog
             completionHandler(nil, NSFileProviderError(.notAuthenticated))
             return Progress()
         }
-        
+
         guard let dbManager else {
             logger.debug("Not fetching item because database is unavailable.", [.item: identifier])
             completionHandler(nil, NSFileProviderError(.notAuthenticated))
@@ -172,7 +172,7 @@ import OSLog
         return progress
     }
 
-    public func fetchContents(for itemIdentifier: NSFileProviderItemIdentifier, version requestedVersion: NSFileProviderItemVersion?,  request: NSFileProviderRequest, completionHandler: @Sendable @escaping (URL?, NSFileProviderItem?, Error?) -> Void) -> Progress {
+    public func fetchContents(for itemIdentifier: NSFileProviderItemIdentifier, version requestedVersion: NSFileProviderItemVersion?, request _: NSFileProviderRequest, completionHandler: @Sendable @escaping (URL?, NSFileProviderItem?, Error?) -> Void) -> Progress {
         let actionId = UUID()
         insertSyncAction(actionId)
         logger.debug("Received request to fetch contents of item.", [.item: itemIdentifier])
@@ -182,7 +182,7 @@ import OSLog
             logger.error("Can't return contents for a specific version as this is not supported.", [.item: itemIdentifier])
             insertErrorAction(actionId)
             completionHandler(
-                nil, 
+                nil,
                 nil,
                 NSError(domain: NSCocoaErrorDomain, code: NSFeatureUnsupportedError)
             )
@@ -221,10 +221,10 @@ import OSLog
     }
 
     public func createItem(
-        basedOn itemTemplate: NSFileProviderItem, 
+        basedOn itemTemplate: NSFileProviderItem,
         fields: NSFileProviderItemFields,
-        contents url: URL?, 
-        options: NSFileProviderCreateItemOptions = [],
+        contents url: URL?,
+        options _: NSFileProviderCreateItemOptions = [],
         request: NSFileProviderRequest,
         completionHandler: @Sendable @escaping (
             NSFileProviderItem?, NSFileProviderItemFields, Bool, Error?
@@ -284,7 +284,7 @@ import OSLog
             }
 
             logger.debug("Calling item creation completion handler.", [.item: item?.itemIdentifier, .name: item?.filename, .error: error])
-            
+
             completionHandler(
                 item ?? itemTemplate,
                 NSFileProviderItemFields(),
@@ -296,11 +296,11 @@ import OSLog
     }
 
     public func modifyItem(
-        _ item: NSFileProviderItem, 
+        _ item: NSFileProviderItem,
         baseVersion: NSFileProviderItemVersion,
-        changedFields: NSFileProviderItemFields, 
+        changedFields: NSFileProviderItemFields,
         contents newContents: URL?,
-        options: NSFileProviderModifyItemOptions = [], 
+        options: NSFileProviderModifyItemOptions = [],
         request: NSFileProviderRequest,
         completionHandler: @Sendable @escaping (NSFileProviderItem?, NSFileProviderItemFields, Bool, Error?) -> Void
     ) -> Progress {
@@ -326,7 +326,6 @@ import OSLog
             return Progress()
         }
 
-
         guard let dbManager else {
             logger.debug("Not modifying item because the database is unavailable.")
             insertErrorAction(actionId)
@@ -335,7 +334,7 @@ import OSLog
         }
 
         let progress = Progress()
-        
+
         Task {
             guard let existingItem = await Item.storedItem(
                 identifier: identifier,
@@ -346,17 +345,17 @@ import OSLog
             ) else {
                 logger.error("Not modifying item because it was not found.", [.item: identifier])
                 insertErrorAction(actionId)
-                
+
                 completionHandler(
                     item,
                     [],
                     false,
                     NSError.fileProviderErrorForNonExistentItem(withIdentifier: item.itemIdentifier)
                 )
-                
+
                 return
             }
-            
+
             let (modifiedItem, error) = await existingItem.modify(
                 itemTarget: item,
                 baseVersion: baseVersion,
@@ -381,15 +380,15 @@ import OSLog
             logger.debug("Calling item modification completion handler.", [.item: item.itemIdentifier, .name: item.filename, .error: error])
             completionHandler(modifiedItem ?? item, [], false, error)
         }
-        
+
         return progress
     }
 
     public func deleteItem(
-        identifier: NSFileProviderItemIdentifier, 
+        identifier: NSFileProviderItemIdentifier,
         baseVersion _: NSFileProviderItemVersion,
-        options _: NSFileProviderDeleteItemOptions = [], 
-        request: NSFileProviderRequest,
+        options _: NSFileProviderDeleteItemOptions = [],
+        request _: NSFileProviderRequest,
         completionHandler: @Sendable @escaping (Error?) -> Void
     ) -> Progress {
         let actionId = UUID()
@@ -432,17 +431,17 @@ import OSLog
                 completionHandler(NSError.fileProviderErrorForNonExistentItem(withIdentifier: identifier))
                 return
             }
-            
+
             logger.debug("Found item for identifier.", [.item: identifier, .name: item.filename])
             let error = await item.delete(domain: domain, ignoredFiles: ignoredFiles, dbManager: dbManager)
-            
+
             if error != nil {
                 insertErrorAction(actionId)
                 signalEnumerator(completionHandler: { _ in })
             } else {
                 removeSyncAction(actionId)
             }
-            
+
             progress.completedUnitCount = 1
             logger.debug("Calling item deletion completion handler.", [.item: identifier, .name: item.filename, .error: error])
             completionHandler(error)
@@ -450,7 +449,7 @@ import OSLog
         return progress
     }
 
-    public func enumerator(for containerItemIdentifier: NSFileProviderItemIdentifier, request: NSFileProviderRequest) throws -> NSFileProviderEnumerator {
+    public func enumerator(for containerItemIdentifier: NSFileProviderItemIdentifier, request _: NSFileProviderRequest) throws -> NSFileProviderEnumerator {
         logger.debug("System requested enumerator.", [.item: containerItemIdentifier])
 
         guard let ncAccount else {
@@ -486,7 +485,7 @@ import OSLog
             return
         }
 
-        guard let manager = manager else {
+        guard let manager else {
             logger.debug("Could not get file provider manager.")
             completionHandler()
             return
@@ -504,7 +503,7 @@ import OSLog
     // MARK: - Helper functions
 
     func signalEnumerator(completionHandler: @escaping (_ error: Error?) -> Void) {
-        guard let manager = manager else {
+        guard let manager else {
             logger.error("Cannot get file provider manager for domain. Cannot signal enumerator.")
             return
         }
@@ -513,7 +512,7 @@ import OSLog
     }
 
     private func signalEnumeratorAfterAccountSetup() {
-        guard let manager = manager else {
+        guard let manager else {
             logger.error("Could not get manager for domain. Cannot signal enumerator after account setup.")
             return
         }
@@ -596,8 +595,8 @@ import OSLog
                 return
             }
 
-            await self.performSetup(account: account, userAgent: userAgent, completionHandler: completionHandler)
-            self.clearPendingAccount(matching: account)
+            await performSetup(account: account, userAgent: userAgent, completionHandler: completionHandler)
+            clearPendingAccount(matching: account)
         }
 
         setupChain = next
@@ -665,7 +664,7 @@ import OSLog
             try? await Task.sleep(nanoseconds: authTimeout)
         }
 
-        switch (authAttemptState) {
+        switch authAttemptState {
             case .authenticationError:
                 logger.error("Authentication failed due to bad credentials.")
                 completionHandler?(NSError(.invalidCredentials))
