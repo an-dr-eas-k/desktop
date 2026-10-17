@@ -482,6 +482,23 @@ public:
     /** We detected that another sync is required after this one */
     bool _anotherSyncNeeded = false;
 
+    /** Number of consecutive timed out transfers after which the sync run is aborted */
+    static constexpr int maxConsecutiveTransferTimeouts = 3;
+
+    /**
+     * Returns the status for a file transfer whose network request timed out.
+     *
+     * A stalled transfer of a single file must not abort the whole sync run, so it
+     * is reported as SoftError and a follow-up sync is requested to retry it.
+     * Only if maxConsecutiveTransferTimeouts transfers time out without any
+     * successful transfer in between, the server is considered unreachable and
+     * FatalError is returned to abort the sync run.
+     */
+    [[nodiscard]] SyncFileItem::Status transferTimedOutStatus();
+
+    /** Resets the consecutive transfer timeout counter after a successful transfer. */
+    void resetConsecutiveTransferTimeouts() { _consecutiveTransferTimeouts = 0; }
+
     /** Per-folder quota guesses.
      *
      * This starts out empty. When an upload in a folder fails due to insufficient
@@ -707,6 +724,8 @@ private:
     bool _scheduleDelayedTasks = false;
 
     QSet<QString> &_bulkUploadBlackList;
+
+    int _consecutiveTransferTimeouts = 0;
 
     static bool _allowDelayedUpload;
 };

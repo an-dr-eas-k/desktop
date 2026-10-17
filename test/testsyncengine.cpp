@@ -2572,6 +2572,83 @@ private Q_SLOTS:
         QVERIFY(!fakeFolder.syncEngine().isAnotherSyncNeeded());
         QCOMPARE(fakeFolder.currentLocalState(), fakeFolder.currentRemoteState());
     }
+
+    void testTransferTimeout_data()
+    {
+        QTest::addColumn<bool>("upload");
+        QTest::addColumn<int>("hangingFiles");
+        QTest::addColumn<bool>("expectAbort");
+
+        for (const auto upload : {false, true}) {
+            const auto direction = upload ? "upload" : "download";
+            QTest::addRow("%s, single timeout", direction) << upload << 1 << false;
+            QTest::addRow("%s, timeouts below limit", direction) << upload << OwncloudPropagator::maxConsecutiveTransferTimeouts - 1 << false;
+            QTest::addRow("%s, timeouts reach limit", direction) << upload << OwncloudPropagator::maxConsecutiveTransferTimeouts << true;
+        }
+    }
+
+    void testTransferTimeout()
+    {
+        QFETCH(bool, upload);
+        QFETCH(int, hangingFiles);
+        QFETCH(bool, expectAbort);
+
+        FakeFolder fakeFolder{FileInfo::A12_B12_C12_S12()};
+
+        QStringList hangingPaths;
+        for (auto i = 0; i < hangingFiles; ++i) {
+            const auto path = QStringLiteral("A/hanging%1").arg(i);
+            hangingPaths.append(path);
+            if (upload) {
+                fakeFolder.localModifier().insert(path, 100);
+            } else {
+                fakeFolder.remoteModifier().insert(path, 100);
+            }
+        }
+
+        // a successful transfer resets the consecutive timeout counter, so only add one when no abort is expected
+        const auto succeedingPath = QStringLiteral("B/succeeding");
+        if (!expectAbort) {
+            if (upload) {
+                fakeFolder.localModifier().insert(succeedingPath, 100);
+            } else {
+                fakeFolder.remoteModifier().insert(succeedingPath, 100);
+            }
+        }
+
+        const auto hangingOperation = upload ? QNetworkAccessManager::PutOperation : QNetworkAccessManager::GetOperation;
+        fakeFolder.setServerOverride([&](QNetworkAccessManager::Operation op, const QNetworkRequest &request, QIODevice *) -> QNetworkReply * {
+            if (op == hangingOperation && request.url().path().contains(QStringLiteral("/hanging"))) {
+                return new FakeHangingReply(op, request, &fakeFolder.syncEngine());
+            }
+            return nullptr;
+        });
+
+        ItemCompletedSpy completeSpy(fakeFolder);
+        QVERIFY(!fakeFolder.syncOnce());
+
+        auto fatalErrors = 0;
+        for (const auto &path : hangingPaths) {
+            const auto item = completeSpy.findItem(path);
+            QVERIFY(item);
+            QVERIFY(item->_status == SyncFileItem::SoftError || item->_status == SyncFileItem::FatalError);
+            if (item->_status == SyncFileItem::FatalError) {
+                ++fatalErrors;
+            }
+        }
+        QCOMPARE(fatalErrors, expectAbort ? 1 : 0);
+
+        if (!expectAbort) {
+            // a stalled transfer must neither abort the sync run nor prevent other files from being synced
+            QVERIFY(itemDidCompleteSuccessfully(completeSpy, succeedingPath));
+            QCOMPARE(fakeFolder.syncEngine().isAnotherSyncNeeded(), ImmediateFollowUp);
+        }
+
+        // once the server responds again, the follow-up sync transfers the remaining files
+        fakeFolder.setServerOverride({});
+        QVERIFY(fakeFolder.syncOnce());
+        QCOMPARE(fakeFolder.currentLocalState(), fakeFolder.currentRemoteState());
+    }
 };
 
 QTEST_GUILESS_MAIN(TestSyncEngine)

@@ -71,6 +71,7 @@ public:
     QByteArray requestId();
 
     [[nodiscard]] qint64 timeoutMsec() const { return _timeoutDuration; }
+    [[nodiscard]] bool timedOut() const { return _timedout; }
 
     /** Returns an error message, if any. */
     [[nodiscard]] virtual QString errorString() const;

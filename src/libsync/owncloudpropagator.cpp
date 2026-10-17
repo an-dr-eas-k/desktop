@@ -88,6 +88,19 @@ int OwncloudPropagator::maximumActiveTransferJob()
     return qMin(3, qCeil(_syncOptions._parallelNetworkJobs / 2.));
 }
 
+SyncFileItem::Status OwncloudPropagator::transferTimedOutStatus()
+{
+    ++_consecutiveTransferTimeouts;
+    if (_consecutiveTransferTimeouts >= maxConsecutiveTransferTimeouts) {
+        qCWarning(lcPropagator) << "Transfer timed out" << _consecutiveTransferTimeouts << "times in a row, aborting the sync";
+        return SyncFileItem::FatalError;
+    }
+
+    qCWarning(lcPropagator) << "Transfer timed out, the file will be retried in a follow-up sync" << _consecutiveTransferTimeouts;
+    _anotherSyncNeeded = true;
+    return SyncFileItem::SoftError;
+}
+
 /* The maximum number of active jobs in parallel  */
 int OwncloudPropagator::hardMaximumActiveJob()
 {

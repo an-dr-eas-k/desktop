@@ -733,6 +733,9 @@ void PropagateUploadFileCommon::commonErrorHandling(AbstractNetworkJob *job)
 
     SyncFileItem::Status status = classifyError(job->reply()->error(), _item->_httpErrorCode,
         &propagator()->_anotherSyncNeeded, replyContent);
+    if (job->timedOut()) {
+        status = propagator()->transferTimedOutStatus();
+    }
 
     // Insufficient remote storage.
     if (_item->_httpErrorCode == 507) {
@@ -873,6 +876,8 @@ void PropagateUploadFileCommon::finalize()
     // Remove from the progress database:
     propagator()->_journal->setUploadInfo(_item->_file, SyncJournalDb::UploadInfo());
     propagator()->_journal->commit("upload file start");
+
+    propagator()->resetConsecutiveTransferTimeouts();
 
     if (_uploadingEncrypted) {
         Q_ASSERT(_item->isEncrypted());

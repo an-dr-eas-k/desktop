@@ -880,7 +880,9 @@ void PropagateDownloadFile::slotGetFinished()
         QString errorString = _item->_httpErrorCode >= 400 ? job->errorStringParsingBody(&errorBody)
                                                            : job->errorString();
         SyncFileItem::Status status = job->errorStatus();
-        if (status == SyncFileItem::NoStatus) {
+        if (job->timedOut()) {
+            status = propagator()->transferTimedOutStatus();
+        } else if (status == SyncFileItem::NoStatus) {
             status = classifyError(err, _item->_httpErrorCode,
                 &propagator()->_anotherSyncNeeded, errorBody);
         }
@@ -1367,6 +1369,7 @@ void PropagateDownloadFile::updateMetadata(bool isConflict)
 
     propagator()->_journal->commit("download file start2");
 
+    propagator()->resetConsecutiveTransferTimeouts();
     done(isConflict ? SyncFileItem::Conflict : SyncFileItem::Success, {}, ErrorCategory::NoError);
 
     const auto isLockOwnedByCurrentUser = _item->_lockOwnerId == propagator()->account()->davUser();
